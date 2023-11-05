@@ -1,0 +1,12 @@
+{
+  "name": "scrapay",
+  "version": "1.0.0",
+  "description": "scapay mono repo ",
+  "main": "index.ts",
+  "repository": "https://github.com/Dom000/scrapay.git",
+  "author": "dom000 <godknowsegiboy00@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
