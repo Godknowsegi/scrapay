@@ -1,49 +1,79 @@
-<div align="center">
+<div align="left">
   
- # [Welcome to Book Management Serve Application!- Book management Back!](https://github.com/Etubaba/scrapay-server) <img src="https://github.com/Etubaba/scrapay-server"  width="3%" height="3%">
+ # [ Book management Dashboard!](https://github.com/Dom000/scrapay)"
 
 </div>
 
-<div align="center">
+<div align="left">
   
 ---
 
-This project was deployed on [https://railway.app/](https://railway.app/) and can be accessed [here](https://scrapay-server.up.railway.app/).
+Project live URL [here](https://scrapay-server.up.railway.app/).
 
 ---
 
 </div>
 
-### <span style="color:#297deb"> Project Status: </span><span style="color:#64fccc">Completed.</span>
 
 ## <span style="color:#297deb"> Project Description: </span>
 
-This is a Graphql server built with nestJS, it authenticate users logged in via auth0 client interface. After a successful authentication user can now perform other book management operations using apollo client for client request.
+This a mono repo that contains a  Graphql server built with nestJS and a Vite React application, for the client. it authenticate  logged in users  via auth0 client interface. After a successful authentication user can now perform other book management operations using apollo client for client request.
 
-Other tools includes express-jwt for authentication auth0 jwt token, prisma for database query, jwks-rsa to retrive secret for token validation.
-
+Additional tools in use encompass express-jwt for authenticating Auth0 JWT tokens, Prisma for querying the database, and jwks-rsa for fetching the token validation secret
 Unit testing was implemented to run test for functionalities on this server.
 
 # <span style="color:#297deb"> How to run: </span>
 
-## Installation
+There are two major ways to bootrap the app.
+# <span style="color:blue"> first: </span>
+
+
+## general Installation from the root folder
 
 ```bash
-$ npm install
+$ yarn run install:all
 ```
 
-## Running the app
+## Running the apps from the root folder 
+
+```bash
+# all development app in the folder i:e cleint app & server app
+$ yarn start:dev
+
+```
+
+# <span style="color:blue"> second: </span>
+
+
+## Installation for client
+
+```bash
+$ cd scrapay-client
+$ yarn install
+```
+
+## Running for client 
 
 ```bash
 # development
-$ yarn start
+$ yarn run dev
 
-# watch mode
+```
+## Installation for server
+
+```bash
+$ cd scrapay-backend
+$ yarn install
+```
+
+## Running for sever
+
+```bash
+# development
 $ yarn start:dev
 
-# production mode
-$ yarn start:prod
 ```
+
 
 ## Test
 
