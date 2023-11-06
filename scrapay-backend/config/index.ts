@@ -23,20 +23,20 @@ export default () => ({
     headers: process.env.CORS_HEADERS || '*',
   },
 
-  jwt: {
-    access: {
-      secret: process.env.JWT_SECRET,
-      signInOptions: {
-        expiresIn: process.env.JWT_ACCEESS_EXPIRES_IN,
-      },
-    },
-    refresh: {
-      secret: process.env.JWT_SECRET,
-      signInOptions: {
-        expiresIn: process.env.JWT_REFRESH_EXPIRES_IN,
-      },
-    },
-  },
+//   jwt: {
+//     access: {
+//       secret: process.env.JWT_SECRET,
+//       signInOptions: {
+//         expiresIn: process.env.JWT_ACCEESS_EXPIRES_IN,
+//       },
+//     },
+//     refresh: {
+//       secret: process.env.JWT_SECRET,
+//       signInOptions: {
+//         expiresIn: process.env.JWT_REFRESH_EXPIRES_IN,
+//       },
+//     },
+//   },
 
   auth: {
     id: process.env.ID,

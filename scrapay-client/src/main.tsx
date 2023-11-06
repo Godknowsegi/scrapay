@@ -14,6 +14,8 @@ const callback_url = import.meta.env.VITE_CALLBACK;
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <Auth0Provider
+      cacheLocation={"localstorage"} // Persist authentication data in local storage
+      // useRefreshTokens={true}
       domain={domain}
       clientId={clientId}
       authorizationParams={{

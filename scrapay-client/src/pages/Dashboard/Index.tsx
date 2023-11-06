@@ -11,14 +11,15 @@ function Index() {
 
   const navigate = useNavigate();
   console.log(isAuthenticated);
-  if (isAuthenticated == false) {
+
+  if (!isAuthenticated) {
     navigate("/");
   }
   //   useEffect(() => {
   //     if (isAuthenticated == false) {
   //       navigate("/");
   //     }
-  //   }, [isAuthenticated]);
+  //   }, []);
 
   return (
     <div className="md:flex w-full mt-16 pt-10">
