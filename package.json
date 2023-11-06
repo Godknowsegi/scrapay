@@ -6,6 +6,15 @@
   "repository": "https://github.com/Dom000/scrapay.git",
   "author": "dom000 <godknowsegiboy00@gmail.com>",
   "license": "MIT",
+  "scripts": {
+    "start:dev": "concurrently \"yarn run start:scrapay-client\" \"yarn run start:scrapay-backend\" ",
+    "start:scrapay-client": "cd scrapay-client && yarn run dev",
+    "start:scrapay-backend": "cd scrapay-backend && yarn start:dev",
+    "install:scrapay-client": "cd scrapay-client && yarn install",
+    "install:scrapay-backend": "cd scrapay-backend && yarn install",
+    "install:all": "concurrently \"yarn run install:scrapay-backend\" \"yarn run install:scrapay-client\" ",
+    "type": "module"
+  },
   "dependencies": {
     "concurrently": "^8.2.2"
   }
