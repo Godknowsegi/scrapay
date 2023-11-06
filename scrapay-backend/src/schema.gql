@@ -3,6 +3,7 @@
 # ------------------------------------------------------
 
 type Book {
+  created_at: String!
   description: String!
   id: String!
   name: String!

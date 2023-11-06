@@ -9,3 +9,14 @@ export const All_BOOKS = gql`
     }
   }
 `;
+
+export const CREATE_BOOK = gql`
+  mutation createBook($input: CreateBookInput!) {
+    createBook(createBookInput: $input) {
+      id
+      name
+      description
+      created_at
+    }
+  }
+`;

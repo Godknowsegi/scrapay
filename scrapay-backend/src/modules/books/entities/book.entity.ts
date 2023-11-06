@@ -10,4 +10,7 @@ export class Book {
 
   @Field(() => String)
   description: books['description'];
+
+  @Field(() => String)
+  created_at: books['created_at'];
 }
