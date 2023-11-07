@@ -337,7 +337,7 @@ function Home() {
         onClose={onClose2}
       >
         <AlertDialogOverlay>
-          <AlertDialogContent>
+          <AlertDialogContent className="m-3">
             <AlertDialogHeader fontSize="lg" fontWeight="bold">
               Delete Book
             </AlertDialogHeader>
