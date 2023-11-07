@@ -11,6 +11,6 @@ export class Book {
   @Field(() => String)
   description: books['description'];
 
-  @Field(() => String)
+  @Field(() => Date)
   created_at: books['created_at'];
 }

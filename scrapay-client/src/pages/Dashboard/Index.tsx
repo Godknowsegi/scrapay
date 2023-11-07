@@ -26,7 +26,7 @@ function Index() {
       <div className="w-1/5 hidden lg:block max-h-[80vh] overflow-y-auto">
         <SideNav />
       </div>
-      <div className="!w-full md:w-4/5 md:m-2 p-2  md:space-y-4 ">
+      <div className="!w-full md:w-4/5 overflow-y-scroll h-auto max-h-[83vh] md:m-2 p-2  md:space-y-4 ">
         <div className="md:flex items-center w-full justify-center mb-5 space-y-5 md:space-y-0 md:space-x-5">
           <InfoCards
             className="!w-full"
