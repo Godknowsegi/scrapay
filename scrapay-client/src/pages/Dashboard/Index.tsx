@@ -1,12 +1,16 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import { Outlet, useNavigate } from "react-router-dom";
 import InfoCards from "../../components/header/InforCards";
-import {  HiUsers } from "react-icons/hi";
+import { HiUsers } from "react-icons/hi";
 import { FaBook } from "react-icons/fa";
 import SideNav from "../../components/sideNav/SideNav";
+import { All_BOOKS } from "../../graphql";
+import { useQuery } from "@apollo/client";
 
 function Index() {
   const { isAuthenticated, user } = useAuth0();
+  const { data,error } = useQuery(All_BOOKS);
+  const allbook = error || data === undefined ? [] : data?.books;
 
   const navigate = useNavigate();
   console.log(isAuthenticated);
@@ -32,7 +36,7 @@ function Index() {
             Icon={FaBook}
             color="bg-red-500"
             text="Total Books"
-            counts={10}
+            counts={allbook.length}
             textColor="text-red-500"
           />
 
