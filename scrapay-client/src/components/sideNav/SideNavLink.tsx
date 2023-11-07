@@ -49,8 +49,8 @@ const SideNavLink = ({
           <div
             className={
               pathname.pathname == path
-                ? "capitalize text-xs font-semibold   text-[#00023D]"
-                : "capitalize text-sm font-medium   text-[#00023D]/50"
+                ? "capitalize hidden md:flex text-xs font-semibold   text-[#00023D]"
+                : "capitalize  hidden md:flex text-sm font-medium   text-[#00023D]/50"
             }
           >
             {name}

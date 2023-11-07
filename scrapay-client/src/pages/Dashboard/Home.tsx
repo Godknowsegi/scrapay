@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from "@apollo/client";
-import React, { useState } from "react";
-import { All_BOOKS, CREATE_BOOK } from "../../graphql/index";
+import React, { useEffect, useState } from "react";
+import { All_BOOKS, CREATE_BOOK, DELETE, UPDATE } from "../../graphql/index";
 import EmptyState from "../../components/EmtyState";
 import { MdHourglassEmpty } from "react-icons/md";
 import { bookType } from "../../interface";
@@ -23,16 +23,32 @@ import {
 
 function Home() {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const {
+    isOpen: isOpen2,
+    onOpen: onOpen2,
+    onClose: onClose2,
+  } = useDisclosure();
+
   const cancelRef = React.useRef(null);
-  const { data, loading, error, refetch } = useQuery(All_BOOKS);
-  const books = error || data === undefined ? [] : data?.books;
+  const cancelRef2 = React.useRef(null);
+  const { data, error, refetch } = useQuery(All_BOOKS);
+  const allbook = error || data === undefined ? [] : data?.books;
+  const [books, setBooks] = useState<bookType[]>(allbook);
   const [isError, setIsError] = useState(false);
   const [loader, setloader] = useState(false);
+  const [actionType, setactionType] = React.useState("create");
+  const [booktoD, setbooktoD] = useState<bookType>();
 
   const [value1, setValue1] = React.useState("");
   const [value2, setValue2] = React.useState("");
-  const [mutate, {}] = useMutation(CREATE_BOOK);
   const toast = useToast();
+  const [mutate, {}] = useMutation(CREATE_BOOK);
+  const [update, {}] = useMutation(UPDATE);
+  const [delet, {}] = useMutation(DELETE);
+
+  useEffect(() => {
+    setBooks(allbook);
+  }, [allbook]);
 
   let handleInputChange1 = (e: { target: { value: any } }) => {
     let inputValue = e.target.value;
@@ -73,6 +89,8 @@ function Home() {
         }
       }
     } catch (err) {
+      setloader(false);
+
       toast({
         title: `Something went wrong`,
 
@@ -82,13 +100,99 @@ function Home() {
       });
     }
   };
-  console.log(books);
+
+  const onEdit = async () => {
+    setloader(true);
+    try {
+      if (value1 == "" || value2 == "") {
+        setIsError(true);
+      } else {
+        const variables = {
+          input: {
+            id: Number(booktoD?.id),
+            name: value1,
+            description: value2,
+          },
+        };
+        const { data } = await update({ variables });
+
+        if (data) {
+          refetch();
+          onClose();
+          toast({
+            title: `success.`,
+            description: `book updated successfully.`,
+            status: "success",
+            duration: 6000,
+            isClosable: true,
+          });
+          setloader(false);
+          setValue1("");
+          setValue2("");
+        }
+      }
+    } catch (err) {
+      setloader(false);
+
+      toast({
+        title: `Something went wrong`,
+        status: "error",
+        duration: 6000,
+        isClosable: true,
+      });
+    }
+  };
+
+  const onDelete = async () => {
+    setloader(true);
+    try {
+      if (booktoD == undefined) {
+        toast({
+          title: `select a book to delete`,
+          status: "error",
+          duration: 6000,
+          isClosable: true,
+        });
+      } else {
+        const variables = {
+          id: Number(booktoD?.id),
+        };
+        const { data } = await delet({ variables });
+
+        if (data) {
+          refetch();
+          onClose2();
+          toast({
+            title: `success.`,
+            description: `book deleted successfully.`,
+            status: "success",
+            duration: 6000,
+            isClosable: true,
+          });
+          setloader(false);
+          setbooktoD(undefined);
+        }
+      }
+    } catch (err) {
+      setloader(false);
+
+      toast({
+        title: `Something went wrong`,
+        status: "error",
+        duration: 6000,
+        isClosable: true,
+      });
+    }
+  };
 
   return (
     <div className="space-y-3">
-      <Button className="!font-normal  !scale-90" onClick={onOpen}>
-        Create Book
-      </Button>
+      {books.length >= 1 ? (
+        <Button className="!font-normal  !scale-90" onClick={onOpen}>
+          Create Book
+        </Button>
+      ) : null}
+
       <div className="w-full mt-5 p-3  overflow-x-auto ">
         {books.length < 1 ? (
           <EmptyState
@@ -142,7 +246,7 @@ function Home() {
                       <div className=" border-y group-hover:border-secondary items-center justify-center flex  py-2 w-full">
                         <div className="flex h-10  items-center space-x-3">
                           <p className="text-textColor text-xs">
-                            {`${ Date()}`}
+                            {`${new Date(element.created_at)}`}
                           </p>
                         </div>
                       </div>
@@ -153,8 +257,11 @@ function Home() {
                         <div className="flex space-x-3 h-10 w-24 items-center justify-center">
                           <span
                             onClick={() => {
-                              // setOpenModal(true);
-                              // setuserToD(element);
+                              setactionType("edit");
+                              setbooktoD(element);
+                              onOpen();
+                              setValue1(element.name);
+                              setValue2(element.description);
                             }}
                             className="flex space-x-2 w-7 h-7 rounded-md bg-slate-100 hover:bg-slate-200  cursor-pointer justify-center items-center text-xs p-1"
                           >
@@ -162,8 +269,8 @@ function Home() {
                           </span>
                           <span
                             onClick={() => {
-                              // setOpenDModal(true);
-                              // setuserToD(element);
+                              setbooktoD(element);
+                              onOpen2();
                             }}
                             className="flex space-x-2 w-7 h-7 rounded-md bg-slate-100 hover:bg-slate-200  cursor-pointer justify-center items-center text-xs p-1"
                           >
@@ -215,10 +322,41 @@ function Home() {
               <Button
                 isLoading={loader}
                 colorScheme="green"
-                onClick={onCreate}
+                onClick={actionType == "create" ? onCreate : onEdit}
                 ml={3}
               >
-                Save
+                {actionType == "create" ? " Save" : "Update"}
+              </Button>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialogOverlay>
+      </AlertDialog>
+      <AlertDialog
+        isOpen={isOpen2}
+        leastDestructiveRef={cancelRef2}
+        onClose={onClose2}
+      >
+        <AlertDialogOverlay>
+          <AlertDialogContent>
+            <AlertDialogHeader fontSize="lg" fontWeight="bold">
+              Delete Book
+            </AlertDialogHeader>
+
+            <AlertDialogBody>
+              Are you sure? You can't undo this action afterwards.
+            </AlertDialogBody>
+
+            <AlertDialogFooter>
+              <Button ref={cancelRef} onClick={onClose2}>
+                Cancel
+              </Button>
+              <Button
+                isLoading={loader}
+                colorScheme="red"
+                onClick={onDelete}
+                ml={3}
+              >
+                Delete
               </Button>
             </AlertDialogFooter>
           </AlertDialogContent>
@@ -228,8 +366,3 @@ function Home() {
   );
 }
 export default Home;
-function mutate(arg0: {
-  variables: { input: { name: string; description: string } };
-}): { data: any } | PromiseLike<{ data: any }> {
-  throw new Error("Function not implemented.");
-}

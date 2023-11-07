@@ -1,9 +1,9 @@
 import SideNavLink from "./SideNavLink";
-import { sideNavLinks, } from "./list";
+import { sideNavLinks } from "./list";
 
 function SideNav() {
   return (
-    <div className="p-5 pl-10">
+    <div className=" md:p-5 md:pl-10">
       {sideNavLinks.map((item, index) => (
         <SideNavLink
           key={index}

@@ -21,8 +21,10 @@ export const UPDATE = gql`
 `;
 
 export const DELETE = gql`
-  mutation remove($input: Int!) {
-    removeBook(id: $input) {
+  mutation removeBook($id: Int!) {
+    removeBook(id: $id) {
+      id
+      description
       name
     }
   }
