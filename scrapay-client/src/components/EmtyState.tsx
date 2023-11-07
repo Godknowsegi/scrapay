@@ -1,8 +1,7 @@
 
 import { Button } from "@chakra-ui/react";
-import React, { MouseEventHandler } from "react";
+import { MouseEventHandler } from "react";
 import { IconType } from "react-icons";
-import { TiUser } from "react-icons/ti";
 
 function EmptyState({
   text,

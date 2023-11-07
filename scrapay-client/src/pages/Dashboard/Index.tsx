@@ -1,8 +1,7 @@
 import { useAuth0 } from "@auth0/auth0-react";
-import React, { useEffect } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import InfoCards from "../../components/header/InforCards";
-import { HiCash, HiUsers } from "react-icons/hi";
+import {  HiUsers } from "react-icons/hi";
 import { FaBook } from "react-icons/fa";
 import SideNav from "../../components/sideNav/SideNav";
 
